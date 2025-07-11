@@ -109,8 +109,13 @@ func main() {
 		// Requests to look up the range.
 		chanRequests = make(chan request)
 		// Reported successes of lookup per chain id. The main routine knows
-		// the current lookup limit.
-		chanSuccesses = make(chan uint64, 2)
+		// the current lookup limit. This approach was fine with a smaller number
+		// of chains, but since we added more, it's become a bit messy and
+		// the initial seeding of the chains should probably be rolled into the same
+		// loop that does the sending. But a quick workaround is just to have a higher
+		// buffer here for the initial tension with the success loop, previously 2 was
+		// sufficient.
+		chanSuccesses = make(chan uint64, 100)
 	)
 	for i := 0; i < runtime.NumCPU()*5; i++ {
 		go func() {
@@ -353,7 +358,6 @@ func getFromBlocks(db *sql.DB) (fromBlocks map[uint64]*big.Int) {
 		}
 		fromBlocks[chainId] = n
 	}
-	slog.Info("chain info", "chains", fromBlocks)
 	return fromBlocks
 }
 
