@@ -1,0 +1,21 @@
+#!/usr/bin/env -S rc -e
+
+chainid=$1
+rpc=$2
+
+fn block_hashes {
+	psql $SPN_TIMESCALE_URI -c '\copy (SELECT DISTINCT block_hash FROM stylus_contracts_unique_1 WHERE created_at > CURRENT_TIMESTAMP - INTERVAL ''1 day'' AND chain_id = '$chainid') TO STDOUT CSV'
+}
+
+fn get_timestamp {
+	cast block --rpc-url $rpc --json $1 | jq -r '.timestamp' | hex-to-int
+}
+
+fn get_update {
+	hash=$1
+	ts=`{get_timestamp $hash}
+	echo 'UPDATE stylus_contracts_deployed_1 SET created_at = to_timestamp('$ts') WHERE block_hash = '''$hash''';'
+}
+
+
+block_hashes | parallel -j30 get_update

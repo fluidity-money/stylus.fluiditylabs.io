@@ -6,7 +6,7 @@ build: chains.tsv web
 chains.tsv: ../chains.tsv
 	@cp ../chains.tsv chains.tsv
 
-web: $(shell find . -name '*.go' -or -name '*.clj' -or -name '*.html' -or -name '*.tmpl')
+web: $(shell find . -name '*.go' -or -name '*.clj' -or -name '*.html' -or -name '*.tmpl') chains.tsv
 	@go build
 
 bootstrap: web

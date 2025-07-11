@@ -6,5 +6,5 @@ build: chains.tsv ingestor
 chains.tsv: ../chains.tsv
 	@cp ../chains.tsv chains.tsv
 
-ingestor: $(shell find . -name '*.go')
+ingestor: $(shell find . -name '*.go') chains.tsv
 	@go build
