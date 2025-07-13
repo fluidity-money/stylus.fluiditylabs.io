@@ -56,10 +56,10 @@ func genInsert(d ...ContractDeployment) (string, error) {
 // execDbInsert is a lazy TEXT-based insertion of values using the
 // database, where coercion happens, done this way so we don't need to
 // bother with local types (like in the main 9lives/Longtail repository).
-func execDbInsert(db *sql.DB, chainId uint64, from *big.Int, deployments ...ContractDeployment) error {
+func execDbInsert(db *sql.DB, chainId uint64, until *big.Int, deployments ...ContractDeployment) error {
 	args := make([]any, 2, (len(deployments)*10)+2)
 	args[0] = strconv.FormatUint(chainId, 10)
-	args[1] = from.String()
+	args[1] = until.String()
 	for _, d := range deployments {
 		args = append(args,
 			d.BlockNumber,

@@ -125,7 +125,7 @@ func main() {
 					log.Fatalf("lookup: %v: %v", r.chainId, err)
 				}
 				if len(deployments) > 0 {
-					if err := execDbInsert(db, r.chainId, r.from, deployments...); err != nil {
+					if err := execDbInsert(db, r.chainId, r.until, deployments...); err != nil {
 						// Database error: kill the program immediately.
 						log.Fatalf("insert db: %v", err)
 					}
