@@ -18,8 +18,8 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"math/big"
 	"log/slog"
+	"math/big"
 	"net/http"
 	"os"
 	"runtime"
@@ -130,7 +130,10 @@ func main() {
 						log.Fatalf("insert db: %v", err)
 					}
 				} else {
-					_,  err := db.Exec(
+					if r.chainId == 21000000 {
+						slog.Info("setting until for weird chain", "until", r.until)
+					}
+					_, err := db.Exec(
 						"SELECT stylus_update_ingestor_checkpoint_1($1, $2)",
 						r.chainId,
 						r.until.String(),
@@ -150,11 +153,18 @@ func main() {
 	blockHeights := getBlockHeights()
 	// From blocks are edited with the current position in the pagination.
 	fromBlocks := getFromBlocks(db)
+	slog.Info("from blocks", "from blocks", fromBlocks[21000000])
 	go func() {
 		// Seed everything using a separate routine.
 		for _, c := range Chains {
-			from := new(big.Int).Set(c.From)
+			from := new(big.Int).Set(fromBlocks[c.ChainId])
 			until := new(big.Int).Add(from, PaginationAmount)
+			if until.Cmp(blockHeights[c.ChainId]) > 0 {
+				until = blockHeights[c.ChainId]
+			}
+			if c.ChainId == 21000000 {
+				slog.Info("setting until for special chain", "until", until, "from", from)
+			}
 			chanRequests <- request{c.ChainId, c.Rpc, from, until}
 		}
 	}()
@@ -359,6 +369,7 @@ func getFromBlocks(db *sql.DB) (fromBlocks map[uint64]*big.Int) {
 		if !ok {
 			log.Fatalf("scan block number: %v", blockNumber)
 		}
+		slog.Info("block number", "chain id", chainId, "block number", blockNumber)
 		fromBlocks[chainId] = n
 	}
 	return fromBlocks
