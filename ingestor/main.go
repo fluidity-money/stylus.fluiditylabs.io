@@ -170,6 +170,9 @@ func main() {
 		// Since we haven't hit the limit yet of what we know the height is,
 		// continue.
 		until := new(big.Int).Add(fromBlocks[c], PaginationAmount)
+		if until.Cmp(blockHeights[c]) > 0 {
+			until = blockHeights[c]
+		}
 		chanRequests <- request{
 			chainId: c,
 			rpc:     rpcs[c],
