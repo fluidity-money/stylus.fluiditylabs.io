@@ -69,7 +69,8 @@ BEGIN
 	INSERT INTO stylus_ingestor_checkpointing_1(chain_id, block_number)
 	VALUES (chain_id_::HUGEINT, block_number_::HUGEINT)
 	ON CONFLICT (chain_id) DO UPDATE
-	SET block_number = EXCLUDED.block_number AND last_updated = CURRENT_TIMESTAMP;
+	SET block_number = EXCLUDED.block_number,
+	last_updated = CURRENT_TIMESTAMP;
 END;
 $$ LANGUAGE plpgsql;
 
