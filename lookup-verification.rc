@@ -1,0 +1,26 @@
+#!/usr/bin/env -S rc
+
+-- Look up contract verification using Arbiscan, filtering for the Arbitrum deployed
+-- contracts. Spits out SQL that can be sent to the database.
+
+if (~ $ARBISCAN_KEY '') exit 1
+if (~ $SPN_TIMESCALE_URI '') exit 1
+
+fn lookup {
+	r=`{
+		curl -s 'https://api.etherscan.io/api?module=contract&action=getabi&address='$1'&apikey='$ARBISCAN_KEY \
+			| jq -r .status
+	}
+	t=FALSE
+	if (~ $r 1) t=TRUE
+	echo 'SELECT stylus_contracts_set_metadata_1($$'$1'$$, '$t');'
+	sleep `{shuf -i 1-5 -n 1}
+}
+
+fn get_unverified_arb_addrs {
+	psql -c '\copy (SELECT contract_address FROM stylus_contracts_unique_1 WHERE chain_id = 42161) TO STDOUT CSV' \
+		$SPN_TIMESCALE_URI
+}
+
+SPN_TIMESCALE_URI=`{pass superposition/sys/mainnet-timescale}
+ARBISCAN_KEY=`{pass fluidity/sys/etherscan} for(a in `{get_unverified_arb_addrs}) lookup $a

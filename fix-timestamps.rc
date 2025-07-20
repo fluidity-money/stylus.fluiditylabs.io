@@ -3,6 +3,8 @@
 chainid=$1
 rpc=$2
 
+if (~ $SPN_TIMESCALE_URI '') exit 1
+
 fn block_hashes {
 	psql $SPN_TIMESCALE_URI -c '\copy (SELECT DISTINCT block_hash FROM stylus_contracts_unique_1 WHERE created_at > CURRENT_TIMESTAMP - INTERVAL ''1 day'' AND chain_id = '$chainid') TO STDOUT CSV'
 }

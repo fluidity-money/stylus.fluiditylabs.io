@@ -45,7 +45,7 @@ CREATE TABLE stylus_contracts_deployed_1 (
 	chain_id INTEGER NOT NULL,
 	block_number HUGEINT NOT NULL,
 	block_hash HASH NOT NULL,
-	transaction_hash HASH NOT NULL,
+	transaction_hash HASH NOT NULL UNIQUE,
 	-- This isn't unique since activations could happen on upgrades taking place to
 	-- ArbOS. But the user view will only return rows with a distinct contract
 	-- address.
@@ -69,7 +69,7 @@ BEGIN
 	INSERT INTO stylus_ingestor_checkpointing_1(chain_id, block_number)
 	VALUES (chain_id_::HUGEINT, block_number_::HUGEINT)
 	ON CONFLICT (chain_id) DO UPDATE
-	SET block_number = EXCLUDED.block_number;
+	SET block_number = EXCLUDED.block_number AND last_updated = CURRENT_TIMESTAMP;
 END;
 $$ LANGUAGE plpgsql;
 
