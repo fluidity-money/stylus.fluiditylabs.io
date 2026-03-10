@@ -3,7 +3,6 @@ Arbitrum One	https://arbitrum.io	https://arb1.arbitrum.io/rpc	249719933	42161
 Arbitrum Sepolia	https://arbitrum.io	https://sepolia-rollup.arbitrum.io/rpc	0	421614
 Superposition	https://superposition.so	https://rpc.superposition.so	0	55244
 Superposition Testnet	https://superposition.so	https://testnet-rpc.superposition.so	0	98985
-Sanko	https://sanko.xyz	https://mainnet.sanko.xyz	0	1996
 Apechain	https://apechain.com	https://rpc.apechain.com	0	33139
 Corn	https://usecorn.com	https://maizenet-rpc.usecorn.com	0	21000000
 Xai Mainnet	https://xai.games	https://xai-chain.net/rpc	0	660279
@@ -11,8 +10,8 @@ Gravity Alpha Mainnet	https://gravity.xyz/	https://rpc.gravity.xyz	0	1625
 Plume	https://plume.org/	https://rpc.plume.org	0	98866
 Degen Chain	https://degen.tips	https://rpc.degen.tips	0	666666666
 EDU Chain	https://educhain.xyz/	https://rpc.edu-chain.raas.gelato.cloud	0	41923
-SX Rollup	https://www.sx.technology/	https://rpc.sx-rollup.gelato.digital	0	4162
 DuckChain Mainnet	https://duckchain.io	https://rpc.duckchain.io	0	5545
 RARI Chain	https://rarichain.org	https://mainnet.rpc.rarichain.org/http	0	1380012617
 Reya	https://reya.network	https://rpc.reya.network	0	1729
 Rari Chain	https://rarichain.org/	https://mainnet.rpc.rarichain.org/http	0	1380012617
+Robinhood Testnet	https://robinhood.com	https://rpc.testnet.chain.robinhood.com	0 1
