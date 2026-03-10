@@ -153,7 +153,6 @@ func main() {
 	blockHeights := getBlockHeights()
 	// From blocks are edited with the current position in the pagination.
 	fromBlocks := getFromBlocks(db)
-	slog.Info("from blocks", "from blocks", fromBlocks[21000000])
 	go func() {
 		// Seed everything using a separate routine.
 		for _, c := range Chains {
@@ -161,9 +160,6 @@ func main() {
 			until := new(big.Int).Add(from, PaginationAmount)
 			if until.Cmp(blockHeights[c.ChainId]) > 0 {
 				until = blockHeights[c.ChainId]
-			}
-			if c.ChainId == 21000000 {
-				slog.Info("setting until for special chain", "until", until, "from", from)
 			}
 			chanRequests <- request{c.ChainId, c.Rpc, from, until}
 		}
