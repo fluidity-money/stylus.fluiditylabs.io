@@ -244,7 +244,7 @@ func getDeployments(rpc string, chainId uint64, from, until *big.Int) (deploymen
 		return nil, fmt.Errorf("decode resp: %v", err)
 	}
 	switch err := reply.Error; {
-	case err.Code != "":
+	case err.Code != 0:
 		return nil, fmt.Errorf("error from rpc (%#v): %v", buf2.String(), err)
 	}
 	for _, r := range reply.Result {
