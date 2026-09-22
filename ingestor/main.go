@@ -227,7 +227,7 @@ func getDeployments(rpc string, chainId uint64, from, until *big.Int) (deploymen
 	buf2 := buf
 	var reply struct {
 		Error struct {
-			Code    string `json:"code"`
+			Code    int `json:"code"`
 			Message string `json:"message"`
 		} `json:"error"`
 		Topics []string `json:"topics"`
