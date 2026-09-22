@@ -1,4 +1,4 @@
-module github.com/fluidity-money/stylus.superposition.so
+module github.com/fluidity-money/stylus.fluiditylabs.io
 
 go 1.23.2
 

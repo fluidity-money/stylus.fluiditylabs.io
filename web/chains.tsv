@@ -1,6 +1,9 @@
 name	website	rpc	from	chain id
 Arbitrum One	https://arbitrum.io	https://arb1.arbitrum.io/rpc	249719933	42161
-Superposition	https://superposition.so	https://rpc.superposition.so	0	55244
-Superposition Testnet	https://superposition.so	https://testnet-rpc.superposition.so	0	98985
-Sanko	https://sanko.xyz	https://mainnet.sanko.xyz	0	1996
+Arbitrum Sepolia	https://arbitrum.io	https://sepolia-rollup.arbitrum.io/rpc	0	421614
 Apechain	https://apechain.com	https://rpc.apechain.com	0	33139
+Xai Mainnet	https://xai.games	https://xai-chain.net/rpc	0	660279
+Gravity Alpha Mainnet	https://gravity.xyz/	https://rpc.gravity.xyz	0	1625
+Plume	https://plume.org/	https://rpc.plume.org	0	98866
+Reya	https://reya.network	https://rpc.reya.network	0	1729
+Robinhood Testnet	https://docs.robinhood.com/chain/	https://rpc.testnet.chain.robinhood.com/rpc	0	46630
