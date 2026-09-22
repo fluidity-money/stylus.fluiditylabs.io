@@ -17,7 +17,8 @@ fn get_update {
 	hash=$1
 	ts=`{get_timestamp $hash}
 	echo 'UPDATE stylus_contracts_deployed_1 SET created_at = to_timestamp('$ts') WHERE block_hash = '''$hash''';'
+	sleep 1
 }
 
 
-block_hashes | parallel -j30 get_update
+block_hashes | shuf | parallel -j5 get_update
